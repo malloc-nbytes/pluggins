@@ -1,0 +1,39 @@
+# Configuration for StartGUI Plugin
+
+# Title of the menu
+menu-title: "&6Start Menu"
+
+# Options for the menu
+options:
+  option1:
+    material: DIAMOND_SWORD
+    display-name: "&cPVP"
+    slot: 20
+    command: "pvp"
+    lore:
+      - "&7Click to enable PvP mode."
+      - "&7Use this option to engage in"
+      - "&7player versus player combat."
+
+  option2:
+    material: DIAMOND_PICKAXE
+    display-name: "&aMining"
+    slot: 22
+    command: "mining"
+    lore:
+      - "&7Click to start mining."
+      - "&7Use this option to embark on"
+      - "&7a mining adventure."
+
+  option3:
+    material: DIAMOND_AXE
+    display-name: "&eWoodcutting"
+    slot: 24
+    command: "woodcutting"
+    lore:
+      - "&7Click to start woodcutting."
+      - "&7Use this option to gather wood"
+      - "&7from trees."
+
+# Material to fill the unused slots
+fill-material: GRAY_STAINED_GLASS_PANE

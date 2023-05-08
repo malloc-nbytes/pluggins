@@ -1,4 +1,11 @@
 name: StartGUI
-version: '${project.version}'
+version: 1.0
 main: org.test.startgui.StartMenuPlugin
 api-version: 1.19
+commands:
+  start:
+    description: Open the start menu
+    usage: /start
+  sg:
+    description: StartGUI plugin commands
+    usage: /sg <reload|help>
