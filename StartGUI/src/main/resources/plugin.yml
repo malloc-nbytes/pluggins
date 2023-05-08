@@ -1,0 +1,4 @@
+name: StartGUI
+version: '${project.version}'
+main: org.test.startgui.StartMenuPlugin
+api-version: 1.19
