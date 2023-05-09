@@ -31,7 +31,6 @@ Miner:
     Item: wooden_pickaxe
   TNTBreak:
     deepslate:
-      # income: 0.15
       income: 0.01
       points: 0.15
       experience: 0.5

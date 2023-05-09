@@ -1,18 +1,22 @@
-Miner {
-  Break {
-    stone {
-      0.10,
-      1,
-      0.30
-    }
-    granite {
-      0.99
-    }
-    andesite {
-      1
-    }
-    * {
-      1000
-    }
+Break {
+  stone {
+    0.10
+    1
+    0.30
+  }
+  granite {
+    |
+    |
+    0.99
+  }
+  andesite {
+    |
+    1
+    |
+  }
+  * {
+    1000
+    |
+    |
   }
 }
