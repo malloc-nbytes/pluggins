@@ -25,13 +25,20 @@ def usage():
     sys.exit(1)
 
 
-def iter_yml_file(filepath):
-    data = filepath.read()
-    pass
-
-
 def is_obj(line):
     return len(line) == 2
+
+
+def iter_yml_file(filepath, action):
+    data = filepath.read()
+    data = data.split('\n')
+    for line in data:
+        line = line.split(' ')
+        line = [elem for elem in line if elem != '']
+        # Remove the `:` from entries.
+        line[0] = line[0][:-1]
+        if line[0] == action.name:
+            pass
 
 
 def parse_edit_file(filepath):
@@ -54,6 +61,7 @@ def parse_edit_file(filepath):
                 item.elems.append(line[0])
                 j += 1
 
+    return action
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
@@ -70,7 +78,7 @@ if __name__ == "__main__":
     edit_file = open(edit_file_arg)
     yml_file = open(yml_file_arg)
 
-    parse_edit_file(edit_file)
+    iter_yml_file(yml_file, parse_edit_file(edit_file))
 
     edit_file.close()
     yml_file.close()
