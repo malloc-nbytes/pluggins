@@ -13,6 +13,12 @@ class Action:
         self.name = name
         self.items = items
 
+    def find_item(self, name):
+        for i in range(0, len(self.items)):
+            if self.items[i].name == name:
+                return i
+        return -1
+
     def dump(self):
         print(self.name)
         for item in self.items:
@@ -29,17 +35,37 @@ def is_obj(line):
     return len(line) == 2
 
 
+def simplify_line(line):
+    line = line.split(' ')
+    line = [elem for elem in line if elem != '']
+    line[0] = line[0][:-1]
+    return line
+
+
 def iter_yml_file(filepath, action):
+    new_file = open("output.txt", "w")
     data = filepath.read()
     data = data.split('\n')
-    for line in data:
-        line = line.split(' ')
-        line = [elem for elem in line if elem != '']
-        # Remove the `:` from entries.
-        line[0] = line[0][:-1]
-        if line[0] == action.name:
-            pass
+    found_action = False
+    for i in range(0, len(data) - 1):
+        line = simplify_line(data[i])
+        if found_action:
+            if len(line) == 1:
+                idx = action.find_item(line[0])
+                if idx != -1:
+                    item = action.items[idx]
+                    for elem in item.elems:
+                        if elem == '|':
+                            pass
+                        else:
+                            pass
+                else:
+                    pass
 
+        if line[0] == action.name:
+            found_action = True
+
+    new_file.close()
 
 def parse_edit_file(filepath):
     data = filepath.read().split('\n')
