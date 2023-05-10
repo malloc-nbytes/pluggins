@@ -42,30 +42,56 @@ def simplify_line(line):
     return line
 
 
+def count_leading_whitespace(line):
+    i = 0
+    for char in line:
+        if char == ' ':
+            i += 1
+        else:
+            return i
+
+
+def add_to_res(line, item, idx):
+    res = None
+    if item.elems[idx] == '|':
+        res = line[1]
+    else:
+        res = item.elems[idx]
+    res += '\n'
+    return res
+
+
 def iter_yml_file(filepath, action):
     new_file = open("output.txt", "w")
+    res = ""
     data = filepath.read()
     data = data.split('\n')
     found_action = False
+    idx = -1
+
     for i in range(0, len(data) - 1):
         line = simplify_line(data[i])
         if found_action:
             if len(line) == 1:
                 idx = action.find_item(line[0])
-                if idx != -1:
-                    item = action.items[idx]
-                    for elem in item.elems:
-                        if elem == '|':
-                            pass
-                        else:
-                            pass
+            elif idx != -1:
+                item = action.items[idx]
+                res += (' ' * 6) + line[0] + ": "
+                if line[0] == "income":
+                    res += add_to_res(line, item, 0)
+                elif line[0] == "points":
+                    res += add_to_res(line, item, 1)
                 else:
-                    pass
-
-        if line[0] == action.name:
+                    res += add_to_res(line, item, 2)
+                continue
+        elif len(line) == 1 and line[0] == action.name:
             found_action = True
+        res += data[i]
+        res += '\n'
 
+    new_file.write(res)
     new_file.close()
+    print(res)
 
 def parse_edit_file(filepath):
     data = filepath.read().split('\n')
