@@ -12,6 +12,7 @@ class Action:
     def __init__(self, name, items=[]):
         self.name = name
         self.items = items
+        self.wildcard = False
 
     def find_item(self, name):
         for i in range(0, len(self.items)):
@@ -31,10 +32,6 @@ def usage():
     sys.exit(1)
 
 
-def is_obj(line):
-    return len(line) == 2
-
-
 def simplify_line(line):
     line = line.split(' ')
     line = [elem for elem in line if elem != '']
@@ -42,19 +39,14 @@ def simplify_line(line):
     return line
 
 
-def count_leading_whitespace(line):
-    i = 0
-    for char in line:
-        if char == ' ':
-            i += 1
-        else:
-            return i
-
-
 def add_to_res(line, item, idx):
     res = None
     if item.elems[idx] == '|':
         res = line[1]
+    elif item.elems[idx][0] == '+':
+        res = str(float(line[1]) + float(item.elems[idx][1:]))
+    elif item.elems[idx][0] == '-':
+        res = str(float(line[1]) - float(item.elems[idx][1:]))
     else:
         res = item.elems[idx]
     res += '\n'
@@ -74,6 +66,8 @@ def iter_yml_file(filepath, action):
         if found_action:
             if len(line) == 1:
                 idx = action.find_item(line[0])
+                if idx == -1 and action.wildcard:
+                    idx = action.find_item('*')
             elif idx != -1:
                 item = action.items[idx]
                 res += (' ' * 6) + line[0] + ": "
@@ -101,9 +95,11 @@ def parse_edit_file(filepath):
 
     for i in range(1, len(data) - 1):
         line = data[i]
-        if is_obj(line):
+        if len(line) == 2:
             item = Item()
             item.name = line[0]
+            if item.name == '*':
+                action.wildcard = True
             j = i + 1
             while True:
                 line = data[j]
